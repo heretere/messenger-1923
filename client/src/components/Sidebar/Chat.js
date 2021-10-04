@@ -14,9 +14,9 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     "&:hover": {
-      cursor: "grab"
-    }
-  }
+      cursor: "grab",
+    },
+  },
 }));
 
 const Chat = (props) => {
@@ -45,7 +45,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setActiveChat: (id) => {
       dispatch(setActiveChat(id));
-    }
+    },
   };
 };
 

@@ -1,9 +1,9 @@
 import {
+  addMessageToStore,
   addNewConvoToStore,
   addOnlineUserToStore,
   addSearchedUsersToStore,
   removeOfflineUserFromStore,
-  addMessageToStore,
 } from "./utils/reducerFunctions";
 
 // ACTIONS

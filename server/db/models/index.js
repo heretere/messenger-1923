@@ -13,5 +13,5 @@ Conversation.hasMany(Message);
 module.exports = {
   User,
   Conversation,
-  Message
+  Message,
 };

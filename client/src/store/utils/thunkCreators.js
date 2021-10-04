@@ -1,8 +1,8 @@
 import axios from "axios";
 import socket from "../../socket";
 import {
-  gotConversations,
   addConversation,
+  gotConversations,
   setNewMessage,
   setSearchedUsers,
 } from "../conversations";

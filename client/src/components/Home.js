@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { Grid, CssBaseline, Button } from "@material-ui/core";
+import { Button, CssBaseline, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { SidebarContainer } from "./Sidebar";
 import { ActiveChat } from "./ActiveChat";
-import { logout, fetchConversations } from "../store/utils/thunkCreators";
+import { fetchConversations, logout } from "../store/utils/thunkCreators";
 import { clearOnLogout } from "../store/index";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: "100vh"
-  }
+    height: "100vh",
+  },
 }));
 
 const Home = (props) => {
@@ -57,7 +57,7 @@ const Home = (props) => {
 const mapStateToProps = (state) => {
   return {
     user: state.user,
-    conversations: state.conversations
+    conversations: state.conversations,
   };
 };
 
@@ -69,7 +69,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     fetchConversations: () => {
       dispatch(fetchConversations());
-    }
+    },
   };
 };
 

@@ -131,5 +131,5 @@ async function runSeed() {
 }
 
 if (module === require.main) {
-  runSeed();
+    runSeed();
 }

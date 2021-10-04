@@ -8,13 +8,13 @@ const SET_FETCHING_STATUS = "SET_FETCHING_STATUS";
 export const gotUser = (user) => {
   return {
     type: GET_USER,
-    user
+    user,
   };
 };
 
 export const setFetchingStatus = (isFetching) => ({
   type: SET_FETCHING_STATUS,
-  isFetching
+  isFetching,
 });
 
 // REDUCER
@@ -26,7 +26,7 @@ const reducer = (state = { isFetching: true }, action) => {
     case SET_FETCHING_STATUS:
       return {
         ...state,
-        isFetching: action.isFetching
+        isFetching: action.isFetching,
       };
     default:
       return state;
