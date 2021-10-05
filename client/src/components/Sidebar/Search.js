@@ -1,5 +1,5 @@
 import React from "react";
-import { FormControl, FilledInput, InputAdornment } from "@material-ui/core";
+import { FilledInput, FormControl, InputAdornment } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -14,14 +14,14 @@ const useStyles = makeStyles(() => ({
     letterSpacing: 0,
     display: "flex",
     justifyContent: "center",
-    marginBottom: 20
+    marginBottom: 20,
   },
   input: {
     "&::placeholder": {
       color: "#ADC0DE",
-      opacity: 1
-    }
-  }
+      opacity: 1,
+    },
+  },
 }));
 
 const Search = (props) => {
@@ -45,7 +45,8 @@ const Search = (props) => {
             <InputAdornment position="start">
               <SearchIcon />
             </InputAdornment>
-          }></FilledInput>
+          }
+        ></FilledInput>
       </FormControl>
     </form>
   );

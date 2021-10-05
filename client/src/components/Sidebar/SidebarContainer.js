@@ -35,7 +35,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     clearSearchedUsers: () => {
       dispatch(clearSearchedUsers());
-    }
+    },
   };
 };
 
