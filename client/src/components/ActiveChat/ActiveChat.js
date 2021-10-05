@@ -19,6 +19,10 @@ const useStyles = makeStyles(() => ({
     flexGrow: 1,
     justifyContent: "space-between",
   },
+  messagesContainer: {
+    maxHeight: "75vh",
+    overflow: "auto",
+  },
 }));
 
 const ActiveChat = (props) => {
@@ -50,11 +54,13 @@ const ActiveChat = (props) => {
             online={conversation.otherUser.online || false}
           />
           <Box className={classes.chatContainer}>
-            <Messages
-              messages={conversation.messages}
-              otherUser={conversation.otherUser}
-              userId={user.id}
-            />
+            <Box className={classes.messagesContainer}>
+              <Messages
+                messages={conversation.messages}
+                otherUser={conversation.otherUser}
+                userId={user.id}
+              />
+            </Box>
             <Input
               otherUser={conversation.otherUser}
               conversationId={conversation.id}
