@@ -1,34 +1,7 @@
-const router = require("express").Router({ mergeParams: true });
+const router = require("express").Router();
 const { Conversation, Message } = require("../../db/models");
 const { Op } = require("sequelize");
 const onlineUsers = require("../../onlineUsers");
-
-// expects conversionId param to be passed in from url
-// updates all messages not sent by user to read = true
-router.put("/", async (req, res, next) => {
-  try {
-    if (!req.user) return res.sendStatus(401);
-    const { conversationId } = req.params;
-    if (!conversationId)
-      return next({ status: 400, message: "No conversationId provided." });
-
-    await Message.update(
-      { read: true },
-      {
-        where: {
-          conversationId: conversationId,
-          senderId: {
-            [Op.not]: req.user.id,
-          },
-        },
-      }
-    );
-
-    res.sendStatus(204);
-  } catch (err) {
-    next(err);
-  }
-});
 
 // expects {recipientId, text, conversationId } in body (conversationId will be null if no conversation exists yet)
 router.post("/", async (req, res, next) => {
