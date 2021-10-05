@@ -40,7 +40,7 @@ const OtherUserBubble = (props) => {
         alt={otherUser.username}
         src={otherUser.photoUrl}
         className={classes.avatar}
-      ></Avatar>
+      />
       <Box>
         <Typography className={classes.usernameDate}>
           {otherUser.username} {time}
