@@ -21,7 +21,7 @@ export const addMessageToStore = (state, payload) => {
       convoCopy.latestMessageTime = Date.parse(message.createdAt);
 
       if (
-        activeConversation &&
+        activeConversation !== null &&
         activeConversation !== convoCopy.otherUser.username
       )
         convoCopy.unreadCount += 1;

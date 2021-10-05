@@ -95,12 +95,21 @@ const sendMessage = (data, body) => {
   });
 };
 
+const sendMessagesRead = (conversationId, otherUserId) => {
+  socket.emit("read-conversation", {
+    conversationId,
+    otherUserId,
+  });
+};
+
 export const readMessages =
   (conversationId, otherUserId) => async (dispatch) => {
     try {
       await updatedReadMessagesCount(conversationId);
 
       dispatch(updateReadMessages(conversationId, otherUserId));
+
+      sendMessagesRead(conversationId, otherUserId);
     } catch (err) {
       console.error(err);
     }
@@ -115,7 +124,7 @@ export const postMessage = (body) => async (dispatch) => {
     if (!body.conversationId) {
       dispatch(addConversation(body.recipientId, data.message));
     } else {
-      dispatch(setNewMessage(data.message));
+      dispatch(setNewMessage(data.message, null, null));
     }
 
     sendMessage(data, body);
