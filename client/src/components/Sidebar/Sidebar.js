@@ -38,9 +38,6 @@ const Sidebar = (props) => {
             convoB.latestMessageTime - convoA.latestMessageTime
         )
         .map((conversation) => {
-          console.log(
-            conversation.messages[conversation.messages.length - 1].createdAt
-          );
           return (
             <Chat
               conversation={conversation}
