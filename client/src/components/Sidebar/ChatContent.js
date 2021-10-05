@@ -18,6 +18,11 @@ const useStyles = makeStyles((theme) => ({
     color: "#9CADC8",
     letterSpacing: -0.17,
   },
+  previewTextBold: {
+    fontSize: 12,
+    letterSpacing: -0.17,
+    fontWeight: 600,
+  },
 }));
 
 const StyledBadge = styled(Badge)(() => ({
@@ -39,7 +44,11 @@ const ChatContent = (props) => {
         <Typography className={classes.username}>
           {otherUser.username}
         </Typography>
-        <Typography className={classes.previewText}>
+        <Typography
+          className={
+            unreadCount > 0 ? classes.previewTextBold : classes.previewText
+          }
+        >
           {latestMessageText}
         </Typography>
       </Box>
