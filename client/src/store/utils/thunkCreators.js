@@ -2,11 +2,12 @@ import axios from "axios";
 import socket from "../../socket";
 import {
   addConversation,
-  gotConversations,
+  getConversations,
   setNewMessage,
   setSearchedUsers,
+  updateReadMessages,
 } from "../conversations";
-import { gotUser, setFetchingStatus } from "../user";
+import { getUser, setFetchingStatus } from "../user";
 
 axios.interceptors.request.use(async function (config) {
   const token = await localStorage.getItem("messenger-token");
@@ -21,7 +22,7 @@ export const fetchUser = () => async (dispatch) => {
   dispatch(setFetchingStatus(true));
   try {
     const { data } = await axios.get("/auth/user");
-    dispatch(gotUser(data));
+    dispatch(getUser(data));
     if (data.id) {
       socket.emit("go-online", data.id);
     }
@@ -36,11 +37,11 @@ export const register = (credentials) => async (dispatch) => {
   try {
     const { data } = await axios.post("/auth/register", credentials);
     await localStorage.setItem("messenger-token", data.token);
-    dispatch(gotUser(data));
+    dispatch(getUser(data));
     socket.emit("go-online", data.id);
   } catch (error) {
     console.error(error);
-    dispatch(gotUser({ error: error.response.data.error || "Server Error" }));
+    dispatch(getUser({ error: error.response.data.error || "Server Error" }));
   }
 };
 
@@ -48,11 +49,11 @@ export const login = (credentials) => async (dispatch) => {
   try {
     const { data } = await axios.post("/auth/login", credentials);
     await localStorage.setItem("messenger-token", data.token);
-    dispatch(gotUser(data));
+    dispatch(getUser(data));
     socket.emit("go-online", data.id);
   } catch (error) {
     console.error(error);
-    dispatch(gotUser({ error: error.response.data.error || "Server Error" }));
+    dispatch(getUser({ error: error.response.data.error || "Server Error" }));
   }
 };
 
@@ -60,7 +61,7 @@ export const logout = (id) => async (dispatch) => {
   try {
     await axios.delete("/auth/logout");
     await localStorage.removeItem("messenger-token");
-    dispatch(gotUser({}));
+    dispatch(getUser({}));
     socket.emit("logout", id);
   } catch (error) {
     console.error(error);
@@ -72,7 +73,7 @@ export const logout = (id) => async (dispatch) => {
 export const fetchConversations = () => async (dispatch) => {
   try {
     const { data } = await axios.get("/api/conversations");
-    dispatch(gotConversations(data));
+    dispatch(getConversations(data));
   } catch (error) {
     console.error(error);
   }
@@ -80,6 +81,10 @@ export const fetchConversations = () => async (dispatch) => {
 
 const saveMessage = async (body) => {
   return (await axios.post("/api/messages", body)).data;
+};
+
+const updatedReadMessagesCount = async (conversationId) => {
+  return axios.put(`/api/conversations/${conversationId}/read-status`);
 };
 
 const sendMessage = (data, body) => {
@@ -90,6 +95,26 @@ const sendMessage = (data, body) => {
   });
 };
 
+const sendMessagesRead = (conversationId, otherUserId) => {
+  socket.emit("read-conversation", {
+    conversationId,
+    otherUserId,
+  });
+};
+
+export const readMessages =
+  (conversationId, otherUserId) => async (dispatch) => {
+    try {
+      await updatedReadMessagesCount(conversationId);
+
+      dispatch(updateReadMessages(conversationId, otherUserId));
+
+      sendMessagesRead(conversationId, otherUserId);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
 // message format to send: {recipientId, text, conversationId}
 // conversationId will be set to null if its a brand new conversation
 export const postMessage = (body) => async (dispatch) => {
@@ -99,7 +124,7 @@ export const postMessage = (body) => async (dispatch) => {
     if (!body.conversationId) {
       dispatch(addConversation(body.recipientId, data.message));
     } else {
-      dispatch(setNewMessage(data.message));
+      dispatch(setNewMessage(data.message, null, null));
     }
 
     sendMessage(data, body);
