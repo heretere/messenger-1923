@@ -84,7 +84,7 @@ const saveMessage = async (body) => {
 };
 
 const updatedReadMessagesCount = async (conversationId) => {
-  return axios.put(`/api/conversations/${conversationId}/messages`);
+  return axios.put(`/api/conversations/${conversationId}/read-status`);
 };
 
 const sendMessage = (data, body) => {

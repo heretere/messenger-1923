@@ -6,7 +6,7 @@ const messagesRouter = require("./messages");
 
 // expects conversionId param to be passed in from url
 // updates all messages not sent by user to read = true
-router.put("/:conversationId/messages", async (req, res, next) => {
+router.put("/:conversationId/read-status", async (req, res, next) => {
   try {
     if (!req.user) return res.sendStatus(401);
     const { conversationId } = req.params;
