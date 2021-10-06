@@ -27,9 +27,7 @@ const useStyles = makeStyles(() => ({
 
 const ActiveChat = (props) => {
   const classes = useStyles();
-  const { user } = props;
-  const { updateReadMessages } = props;
-  const conversation = props.conversation || {};
+  const { user, updateReadMessages, conversation = {} } = props;
 
   useEffect(() => {
     if (
