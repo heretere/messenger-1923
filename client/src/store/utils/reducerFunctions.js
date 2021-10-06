@@ -39,15 +39,12 @@ export const updateReadCountToStore = (state, payload) => {
   return state.map((convo) => {
     if (convo.id !== conversationId) return convo;
     const convoCopy = { ...convo };
-    let updated = false;
     convoCopy.messages = convoCopy.messages.map((message) => {
       if (message.senderId === otherUserId && !message.read) {
-        updated = true;
         return { ...message, read: true };
-      } else return message;
+      } else return { ...message };
     });
-    convoCopy.unreadCount = 0;
-    return updated ? convoCopy : convo;
+    return convoCopy;
   });
 };
 
