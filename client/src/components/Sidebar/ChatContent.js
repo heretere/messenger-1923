@@ -1,8 +1,8 @@
 import React from "react";
-import { Badge, Box, styled, Typography } from "@material-ui/core";
+import { Badge, Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     display: "flex",
     justifyContent: "space-between",
@@ -23,10 +23,7 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: -0.17,
     fontWeight: 600,
   },
-}));
-
-const StyledBadge = styled(Badge)(() => ({
-  "& .MuiBadge-badge": {
+  badge: {
     top: 22,
     right: 25,
   },
@@ -52,7 +49,11 @@ const ChatContent = (props) => {
           {latestMessageText}
         </Typography>
       </Box>
-      <StyledBadge color="primary" badgeContent={unreadCount} />
+      <Badge
+        className={classes.badge}
+        color="primary"
+        badgeContent={unreadCount}
+      />
     </Box>
   );
 };
